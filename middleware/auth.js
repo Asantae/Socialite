@@ -1,16 +1,17 @@
+const jwt = require("jsonwebtoken")
+const env = require('dotenv').config( {path: "./config/.env"} )
+const User = require("../models/user");
+
 module.exports = {
-  ensureAuth: function (req, res, next) {
-    if (req.isAuthenticated()) {
+  ensureAuth: async function (req, res, next) {
+    console.log(req.session)
+    // Verify the token using jwt.verify method
+    try {
+      jwt.verify(token, process.env.JWT_SECRET);
       return next();
-    } else {
-      res.redirect("/");
+    } catch(err){
+      console.log('error: ' + err.name);
+      res.redirect("/login");
     }
   },
-  ensureGuest: function (req, res, next) {
-    if (!req.isAuthenticated()) {
-      return next();
-    } else {
-      res.redirect("/dashboard");
-    }
-  },
-};
+}
