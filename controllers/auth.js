@@ -16,52 +16,43 @@ exports.postLogin = async (req, res, next) => {
     const password = req.body.name[1]
     const user = await User.findOne({ username }).lean()
 //in progress
-    req.session.regenerate(function (err) {
-        if (err) next(err)
-    
-        // store user information in session, typically a user id
-        req.session.user = req.body.user
-    
-        // save the session before redirection to ensure page
-        // load does not happen before session is saved
-        req.session.save(function (err) {
-          if (err) return next(err)
-          res.redirect('/')
-// in progress
-    if(!user) {
-        return res.json({ status:'error', error: 'Invalid username/password' })
-    }
-    if(user && (await bcrypt.compare(password, user.password))){
-            let lastLoggedInAt = new Date().toLocaleString('en-US') + " " + "(timezone is in EST)"
-            console.log(lastLoggedInAt)
-            lastLoggedInAt.toString()
-            const token = jwt.sign({
-            id: user._id,
-            username: user.username,
-            lastLogged: lastLoggedInAt,
-        }, process.env.SESSION_SECRET, {
-            expiresIn: '2h'
-        })
-        // update certain fields in db
-        await User.findOne(
-        {
-            username: username,
-        },
-        )
-        res.json({
-            user: username, 
-            status: 'ok',
-            token: token,
-            login: true,
-        })
-    } else {
-    res.json ({ 
-      status: 'error', 
-      error: 'Invalid username/password',
-      login: false, 
+  if(!user) {
+      return res.json({ status:'error', error: 'Invalid username/password' })
+  }
+  if(user && (await bcrypt.compare(password, user.password))){
+      let lastLoggedInAt = new Date().toLocaleString('en-US') + " " + "(timezone is in EST)"
+      console.log(lastLoggedInAt)
+      lastLoggedInAt.toString()
+      const token = jwt.sign({
+      id: user._id.toString(),
+      username: user.username,
+      lastLogged: lastLoggedInAt,
+    }, process.env.SESSION_SECRET, {
+      expiresIn: '2h'
     })
-    console.log('Invalid username or password')
-    } 
+    // update certain fields in db
+    await User.findOne(
+      {
+        username: username,
+      },
+    )
+    req.session.user = user._id.toString()
+    req.session.token = token
+    console.log(req.session)
+    res.json({
+      user: username, 
+      status: 'ok',
+      token: token,
+      login: true,
+    })
+  } else {
+  res.json ({ 
+    status: 'error', 
+    error: 'Invalid username/password',
+    login: false, 
+  })
+  console.log('Invalid username or password')
+  } 
 }
 
 exports.postSignup= async (req, res, next) => {
