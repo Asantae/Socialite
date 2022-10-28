@@ -21,7 +21,7 @@ exports.postLogin = async (req, res, next) => {
   }
   if(user && (await bcrypt.compare(password, user.password))){
       let lastLoggedInAt = new Date().toLocaleString('en-US') + " " + "(timezone is in EST)"
-      console.log(lastLoggedInAt)
+      
       lastLoggedInAt.toString()
       const token = jwt.sign({
       id: user._id.toString(),
