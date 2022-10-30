@@ -1,16 +1,17 @@
 <%- include('partials/header') -%>
 
 <main>
-  <form id="login-form" action="login" method="POST">
+  <form id="login-form" action="login" method="POST" class="bg-accent">
     <span>Socialite Login</span>
-    <input name="name" type="text" autocomplete="off" class="login-name" placeholder="Username" id="username">
+    <input name="username" type="text" autocomplete="off"placeholder="Username">
     <small class="error"></small>
-    <input name="name" type="password" class="login-password" placeholder="Password" id="password">
+    <input name="password" type="password" placeholder="Password">
     <small class="error"></small>
-    <button id="form-submit-button" type="submit" value="Send">Login</button>
-    <a class="new-page-link" href="signup">Signup</a>
-    <a class="new-page-link" href="change-password">Forgot password?</a>
+    <button type="submit" value="Send">Login</button>
+
   </form>
+  <a class="new-page-link" href="signup">Signup</a>
+  <a class="new-page-link" href="change-password">Forgot password?</a>
 </main>
 
 <%- include('partials/footer') -%>

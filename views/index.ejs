@@ -1,10 +1,27 @@
 <%- include('partials/header') -%>
-
+<%- include('partials/navigation') -%>
 <main class="bg-dark">
+    <form action="post/createPost" method="POST">
+        <input name="title" type="text" autocomplete="off" placeholder="title">
+        <small class="error"></small>
+        <textarea name="caption" type="text" placeholder="caption"></textarea>
+        <small class="error"></small>
+      <button value="send" type="submit">Create Post</button>  
+    </form>
+    
     <section class="bg-accent">
-        <a href="/login" class="col-3 btn btn-primary"> Login</a>
-        <a href="/signup" class="col-3 btn btn-primary"> Signup</a>
+        <ul>
+            <% for(let i = 0; i < posts.length; i++) { %>
+              <li>
+                <a href="/post/<%= posts[i]._id%>"></a>
+              </li>
+              <h1><%= posts[i].username %></h1>
+              <span><%= posts[i].title %></span><br>
+              <span><%= posts[i].caption %></span>
+            <% } %>
+        </ul>
     </section>
+
 </main>
     
 

@@ -1,13 +1,13 @@
 <%- include('partials/header') -%>
 
 <main>
-    <form id="registration-form" action="signup" method="POST">
+    <form id="registration-form" action="signup" method="POST" class="bg-accent">
         <span>Signup</span>
-        <input name="name" type="text" autocomplete="off" class="login-name" placeholder="Username" id="username">
+        <input name="username" type="text" autocomplete="off" class="login-name" placeholder="Username" id="username">
         <small class="error"></small>
-        <input name="name" type="password" class="login-password" placeholder="Password" id="password">
+        <input name="password" type="password" class="login-password" placeholder="Password" id="password">
         <small class="error"></small>
-        <input name="name" type="password" class="login-password" placeholder="Re-enter Password" id="reEnteredPass">
+        <input name="reEnteredPassword" type="password" class="login-password" placeholder="Re-enter Password" id="reEnteredPass">
         <small class="error"></small>
         <button id="form-submit-button" type="submit" value="Send">Sign up</button>
         <a class="new-page-link" href="login">Login Here</a>

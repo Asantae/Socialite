@@ -7,11 +7,9 @@ const PostSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    require: true,
   },
   cloudinaryId: {
     type: String,
-    require: true,
   },
   caption: {
     type: String,
@@ -20,10 +18,15 @@ const PostSchema = new mongoose.Schema({
   likes: {
     type: Number,
     required: true,
+    default: 0,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+  },
+  username: {
+    type: String,
+    required: true,
   },
   createdAt: {
     type: Date,

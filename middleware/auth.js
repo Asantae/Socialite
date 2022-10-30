@@ -1,17 +1,16 @@
 const jwt = require("jsonwebtoken")
 const env = require('dotenv').config( {path: "./config/.env"} )
-const User = require("../models/user");
 
 module.exports = {
   ensureAuth: async function (req, res, next) {
     
     if(req.session.user){
       try {
-        console.log(req.session.user)
-        //Verify the token using jwt.verify method
+        //Verify the token using jwt.verify method (this ensures that the user hasnt manipulated the token)
         jwt.verify(req.session.token, process.env.SESSION_SECRET);
         return next();
       } catch(err){
+        //If there is any error, the session will be destroyed and the user will be rerouted to the login page (will pretty much log out the user)
         req.session.destroy((error) => {
           if(error){
             console.log(error)
@@ -21,6 +20,7 @@ module.exports = {
         res.redirect("/login");
       }
     } else {
+      //if no session exists the user will be rerouted to login page
       res.redirect("/login")
     }
   },
