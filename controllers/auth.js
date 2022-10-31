@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 
 exports.getLogin = (req, res) => {
   if (req.session.user) {
-      return res.redirect("/");
+      return res.redirect("/home");
   }
   res.render("login", {
       title: "Login",
@@ -32,7 +32,7 @@ exports.postLogin = async (req, res) => {
     })
     req.session.user = user._id.toString()
     req.session.token = token
-    res.redirect("/")
+    res.redirect("/home")
   } else {
   res.json ({ 
     status: 'error', 
@@ -86,7 +86,7 @@ exports.postSignup= async (req, res, next) => {
       })
       req.session.user = user._id.toString()
       req.session.token = token
-      res.redirect("/")
+      res.redirect("/home")
     }
     
   } catch(error){
@@ -103,16 +103,28 @@ exports.logout = (req, res) => {
     if (err) {
       console.log("Error : Failed to destroy the session during logout.", err);
     }
-    res.redirect("/");
+    res.redirect("/home");
   });
 };
 
 //if a user exists it will redirect to the dashboard
 exports.getSignup = (req, res) => {
-    if (req.session.user) {
-      return res.redirect("/");
-    }
-    res.render("signup", {
-      title: "Create Account",
-    });
+  if (req.session.user) {
+    return res.redirect("/home");
+  }
+  res.render("signup", {
+    title: "Create Account",
+  });
+};
+
+//this will render the profile page depending on the passed in parameters
+exports.getProfile = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.session.user });
+    res.render("profile.ejs", { username: user.username })
+  } catch(err) {
+    console.log(err)
+    res.redirect("/home")
+  };
+
 };
