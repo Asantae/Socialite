@@ -11,10 +11,10 @@
       <span><%= post.caption %></span><br>
       <span>comments:</span><br>
       <% if(comments.length === 0) { %>
-        <h1>This is post has no comments.</h1>
+        <h1>This post has no comments.</h1>
       <% } else { %>
         <% for(let i = 0; i < comments.length; i++) { %>
-          <h3><%= comments[i].creator %></h3>
+          <h3><%= comments[i].creatorUsername %></h3>
           <span><%= comments[i].comment %></span><br>
         <% } %>
       <% } %>

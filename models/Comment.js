@@ -14,7 +14,11 @@ const CommentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Post",
   },
-  creator: {
+  creatorUsername: {
+    type: String,
+    required: true,
+  },
+  creatorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },

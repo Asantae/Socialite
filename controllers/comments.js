@@ -9,12 +9,14 @@ exports.comment = async (req, res) => {
     const comment = req.body.comment;
     const post = req.params.id;
     const creator = req.session.user;
-    
+    const user = await User.findById(creator);
+    const username = user.username;
     try {
         const response = await Comment.create({
             comment: comment,
             post: post,
-            creator: creator,
+            creatorId: creator,
+            creatorUsername: username,
 
         })
         res.redirect("/post/" + post.toString())
