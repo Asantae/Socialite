@@ -1,6 +1,24 @@
 <%- include('partials/header') -%>
 <%- include('partials/navigation') -%>
 
-
+<main>
+    <section class="bg-accent">
+        <ul>
+            <% for(let i = 0; i < posts.length; i++) { %>
+              <li>
+                <a href="/profile/<%= posts[i].username%>"><h1><%= posts[i].username %></h1></a>
+                <span><%= posts[i].title %></span><br>
+                <span><%= posts[i].caption %></span><br>
+                <a href="/post/<%= posts[i]._id%>"><span>view comments</span></a>
+                <form action="comments/comment/<%= posts[i]._id %>" method="POST">
+                  <input name="comment" type="text" autocomplete="off" placeholder="Add a comment">
+                  <small class="error"></small>
+                  <button value="send" type="submit">Post</button>  
+                </form>
+              </li>
+            <% } %>
+          </ul>
+    </section>
+</main>
 
 <%- include('partials/footer') -%>

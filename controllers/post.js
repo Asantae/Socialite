@@ -7,7 +7,7 @@ exports.createPost = async (req, res) => {
     const caption = req.body.caption
     const id = req.session.user
     const user = await User.findById(req.session.user).lean();
-try {
+    try {
         await Post.create({
             title,
             caption: caption,
@@ -21,7 +21,7 @@ try {
 }
 
 exports.getPost = async (req, res) => {
-    try{
+    try {
         const postId = req.params.id
         const post = await Post.findOne({ _id: postId })
         const comments = await Comment.find({ post: postId })

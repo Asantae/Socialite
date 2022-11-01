@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const Post = require("../models/post");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
@@ -47,9 +48,7 @@ exports.postSignup= async (req, res, next) => {
   const username = req.body.username
   const plainTextPassword = req.body.password
   const reEnteredPass = req.body.reEnteredPassword
-  console.log(username)
-  console.log(plainTextPassword)
-  console.log(reEnteredPass)
+
   if(!username || typeof username !== 'string') {
     return res.json({status: 'error', error: 'Invalid Username'})
   }
@@ -121,7 +120,36 @@ exports.getSignup = (req, res) => {
 exports.getProfile = async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.session.user });
-    res.render("profile.ejs", { username: user.username })
+    const post = await Post.find({ username: user.username }).sort({ createdAt: "desc" }).lean();
+    let now = new Date()
+    let subtractedDate = now - post[0].createdAt
+    let seconds = subtractedDate / 1000
+    let minutes = seconds / 60
+    let hours = minutes / 60
+    let days = hours / 24
+    let weeks = days / 7
+    console.log(post[0].createdAt)
+    if (seconds < 59) {
+      let timeAgo = Math.trunc(seconds) + " second(s) ago..."
+    
+    } else if (minutes < 59) {
+      let timeAgo = Math.trunc(minutes) + " minute(s) ago..."
+    
+    } else if (hours < 24) {
+      let timeAgo = Math.trunc(hours) + " hour(s) ago..."
+    
+    } else if (days < 7) {
+      let timeAgo = Math.trunc(days) + " day(s) ago..."
+    
+    } else if (weeks < 2) {
+      let timeAgo = Math.trunc(weeks) + " week(s) ago..."
+    
+    } else {
+      let timeAgo = post[0].createdAt
+    
+    }
+
+    res.render("profile.ejs", { username: user.username, posts: post });
   } catch(err) {
     console.log(err)
     res.redirect("/home")
