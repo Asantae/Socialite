@@ -1,17 +1,22 @@
 <%- include('partials/header') -%>
 
-<main>
-  <form id="login-form" action="login" method="POST" class="bg-accent">
-    <span>Socialite Login</span>
-    <input name="username" type="text" autocomplete="off"placeholder="Username">
-    <small class="error"></small>
-    <input name="password" type="password" placeholder="Password">
-    <small class="error"></small>
-    <button type="submit" value="Send">Login</button>
+<main class="bg-accent">
+  <section class="login-container">
+    <form action="login" method="POST" class="login-form bg-white">
+      <div class="login-logo-div">
+       <span class="login-logo">Socialite</span> 
+      </div>
+      <input name="username" type="text" autocomplete="off" aria-label="Username" class="login-form-items" placeholder="Username">
+      <small class="error"></small>
+      <input name="password" type="password" aria-label="Password" class="login-form-items" placeholder="Password">
+      <small class="error"></small>
+      <button type="submit" value="Send" class="login-button bg-accent">Log in</button>
+      <a class="new-page-link" href="signup">Sign up</a>
+      <a class="new-page-link" href="change-password">Forgot password?</a>
+    </form>
 
-  </form>
-  <a class="new-page-link" href="signup">Signup</a>
-  <a class="new-page-link" href="change-password">Forgot password?</a>
+  </section>
+
 </main>
 
 <%- include('partials/footer') -%>

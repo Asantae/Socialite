@@ -29,9 +29,9 @@ exports.postLogin = async (req, res) => {
       username: user.username,
       lastLogged: lastLoggedInAt,
     }, process.env.SESSION_SECRET, {
-      expiresIn: '2h'
+      expiresIn: '3h'
     })
-    req.session.user = user._id.toString()
+    req.session.user = user._id
     req.session.token = token
     res.redirect("/home")
   } else {
@@ -121,35 +121,37 @@ exports.getProfile = async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.session.user });
     const post = await Post.find({ username: user.username }).sort({ createdAt: "desc" }).lean();
-    let now = new Date()
-    let subtractedDate = now - post[0].createdAt
-    let seconds = subtractedDate / 1000
-    let minutes = seconds / 60
-    let hours = minutes / 60
-    let days = hours / 24
-    let weeks = days / 7
-    console.log(post[0].createdAt)
-    if (seconds < 59) {
-      let timeAgo = Math.trunc(seconds) + " second(s) ago..."
-    
-    } else if (minutes < 59) {
-      let timeAgo = Math.trunc(minutes) + " minute(s) ago..."
-    
-    } else if (hours < 24) {
-      let timeAgo = Math.trunc(hours) + " hour(s) ago..."
-    
-    } else if (days < 7) {
-      let timeAgo = Math.trunc(days) + " day(s) ago..."
-    
-    } else if (weeks < 2) {
-      let timeAgo = Math.trunc(weeks) + " week(s) ago..."
-    
-    } else {
-      let timeAgo = post[0].createdAt
-    
+    let timingArr = [];
+    for(let i = 0; i < post.length; i++){
+      let now = new Date();
+      let subtractedDate = now - post[i].createdAt;
+      let seconds = subtractedDate / 1000;
+      let minutes = seconds / 60;
+      let hours = minutes / 60;
+      let days = hours / 24;
+      let weeks = days / 7;
+      if (seconds < 59) {
+        let timeAgo = Math.trunc(seconds) + " second(s) ago...";
+        timingArr.splice(i, 0, timeAgo)
+      } else if (minutes < 59) {
+        let timeAgo = Math.trunc(minutes) + " minute(s) ago...";
+        timingArr.splice(i, 0, timeAgo)
+      } else if (hours < 24) {
+        let timeAgo = Math.trunc(hours) + " hour(s) ago...";
+        timingArr.splice(i, 0, timeAgo)
+      } else if (days < 7) {
+        let timeAgo = Math.trunc(days) + " day(s) ago...";
+        timingArr.splice(i, 0, timeAgo)
+      } else if (weeks < 2) {
+        let timeAgo = Math.trunc(weeks) + " week(s) ago...";
+        timingArr.splice(i, 0, timeAgo)
+      } else {
+        let timeAgo = post[i].createdAt;
+        timingArr.splice(i, 0, timeAgo)
+      }
     }
 
-    res.render("profile.ejs", { username: user.username, posts: post });
+    res.render("profile.ejs", { username: user.username, posts: post, timePosted: timingArr });
   } catch(err) {
     console.log(err)
     res.redirect("/home")

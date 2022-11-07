@@ -1,17 +1,22 @@
 <%- include('partials/header') -%>
 
-<main>
-    <form id="registration-form" action="signup" method="POST" class="bg-accent">
-        <span>Signup</span>
-        <input name="username" type="text" autocomplete="off" class="login-name" placeholder="Username" id="username">
-        <small class="error"></small>
-        <input name="password" type="password" class="login-password" placeholder="Password" id="password">
-        <small class="error"></small>
-        <input name="reEnteredPassword" type="password" class="login-password" placeholder="Re-enter Password" id="reEnteredPass">
-        <small class="error"></small>
-        <button id="form-submit-button" type="submit" value="Send">Sign up</button>
-        <a class="new-page-link" href="login">Login Here</a>
-    </form>
+<main class="bg-accent">
+    <section class="login-container">
+        <form action="signup" method="POST" class="login-form bg-white">
+            <div class="login-logo-div">
+                <span class="login-logo">Socialite</span> 
+            </div>
+            <input class="login-form-items" name="username" type="text" autocomplete="off" class="login-name" placeholder="Username" id="username">
+            <small class="error"></small>
+            <input class="login-form-items" name="password" type="password" class="login-password" placeholder="Password" id="password">
+            <small class="error"></small>
+            <input class="login-form-items" name="reEnteredPassword" type="password" class="login-password" placeholder="Re-enter Password" id="reEnteredPass">
+            <small class="error"></small>
+            <button class="login-button bg-accent" type="submit" value="Send">Sign up</button>
+            <a class="new-page-link" href="login">Log in</a>
+        </form>   
+    </section>
+
 </main>
 
 <%- include('partials/footer') -%>

@@ -7,6 +7,7 @@
             <% for(let i = 0; i < posts.length; i++) { %>
               <li>
                 <a href="/profile/<%= posts[i].username%>"><h1><%= posts[i].username %></h1></a>
+                <span><%= timePosted[i] %></span><br>
                 <span><%= posts[i].title %></span><br>
                 <span><%= posts[i].caption %></span><br>
                 <a href="/post/<%= posts[i]._id%>"><span>view comments</span></a>

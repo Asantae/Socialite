@@ -1,33 +1,41 @@
 <%- include('partials/header') -%>
 <%- include('partials/navigation') -%>
-<main class="bg-dark">
-  <form action="post/createPost" method="POST">
-      <input name="title" type="text" autocomplete="off" placeholder="title">
+<main class="index-main-content">
+  <div class="form-container">
+    <form class="post-form" action="post/createPost" method="POST">
+      <textarea class="bg-dark post-form-items" name="caption" type="text" placeholder="What would you like to say <%= username %>?"></textarea>
       <small class="error"></small>
-      <textarea name="caption" type="text" placeholder="caption"></textarea>
-      <small class="error"></small>
-    <button value="send" type="submit">Create Post</button>  
-  </form>
-  
-  <section class="bg-accent">
+      <div class="index-button-div">
+        <button class="form-button fs-300" value="send" type="submit">Post</button>
+      </div>
+    </form>
+  </div>
+
+  <section class="recent-posts">
     <ul>
       <% for(let i = 0; i < posts.length; i++) { %>
-        <li>
-          <a href="/profile/<%= posts[i].username%>"><h1><%= posts[i].username %></h1></a>
-          <span><%= posts[i].title %></span><br>
-          <span><%= posts[i].caption %></span><br>
-          <a href="/post/<%= posts[i]._id%>"><span>view comments</span></a>
-          <form action="comments/comment/<%= posts[i]._id %>" method="POST">
-            <input name="comment" type="text" autocomplete="off" placeholder="Add a comment">
-            <small class="error"></small>
-            <button value="send" type="submit">Post</button>  
-          </form>
+        <li class="card">
+
+          <div class="user-time-posted">
+            <a href="/profile/<%= posts[i].username%>">
+              <span class="fs-300 post-username"><%= posts[i].username %></span>
+              <span class="fs-200"> - <%= timePosted[i] %></span>
+            </a>
+            
+          </div>
+          <div class="post-content">
+            <span class="fs-300 post-caption"><%= posts[i].caption %></span>
+          </div>
+          <div class="post-interactions">
+            
+            <a href="/post/<%= posts[i]._id %>"><span>comments</span></a>
+            <span>likes</span>
+          </div>
         </li>
       <% } %>
     </ul>
   </section>
 
 </main>
-    
 
 <%- include('partials/footer') -%>

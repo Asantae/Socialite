@@ -6,7 +6,7 @@
 
     <ul>
       <h1><%= post.username %></h1>
-      
+      <span><%= timePosted[0] %></span><br>
       <span><%= post.title %></span><br>
       <span><%= post.caption %></span><br>
       <span>comments:</span><br>
@@ -15,6 +15,7 @@
       <% } else { %>
         <% for(let i = 0; i < comments.length; i++) { %>
           <h3><%= comments[i].creatorUsername %></h3>
+          <span><%= timeCommented[i] %></span><br>
           <span><%= comments[i].comment %></span><br>
         <% } %>
       <% } %>
