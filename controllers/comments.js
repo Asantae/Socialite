@@ -22,6 +22,6 @@ exports.comment = async (req, res) => {
         res.redirect("/post/" + post.toString())
     } catch (err) {
         console.log(err);
-        res.redirect("/home")
+        res.redirect("/home");
     }
 };
