@@ -10,7 +10,6 @@ module.exports = {
       const user = await User.findOne({ _id: req.session.user });
       let comments =[]
       for(let i = 0; i < post.length; i++){
-        console.log(post[i]._id)
         let comment = await Comment.find({ post: post[i]._id })
         if(comment === null){
           comments.splice(i, 0 , 0)
@@ -18,8 +17,6 @@ module.exports = {
           comments.splice(i, 0 , comment.length)
         }
       }
-      console.log(comments)
-      console.log(comments.length)
       
       let timingArr = [];
       for(let i = 0; i < post.length; i++){
@@ -28,7 +25,6 @@ module.exports = {
         let seconds = subtractedDate / 1000;
         let minutes = seconds / 60;
         let hours = minutes / 60;
-        let days = hours / 24;
         if (seconds < 59) {
           let timeAgo = Math.trunc(seconds) + "s";
           timingArr.splice(i, 0, timeAgo)

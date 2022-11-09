@@ -136,6 +136,12 @@ select {
   border: 0;
 }
 
+hidden {
+    display: none;
+    pointer-events: none;
+    opacity: 0;
+}
+
 /* colors */
 
 .bg-dark { background-color: hsl( var(--clr-dark) );}
@@ -455,16 +461,41 @@ svg {
     width: 100vw;
     min-height: 100vh;
     position: fixed;
-    background-color: rgba(0, 0, 255, 0.2);
+    background-color: rgba(0, 5, 46, 0.8);
     top: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    
+}
+
+.modal-background.active {
+    pointer-events: auto;
+    opacity: 1;
 }
 
 .comment-modal {
     background-color: black;
-    width: 600px;
-    height: 400px;
+    max-width: 600px;
+    max-height: 400px;
     border-radius: 15px;
+    margin-top: 15vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    flex-direction: column;
+    
+}
+
+#modal-exit-button {
+    position: absolute;
+    top: 16px;;
+    left: 16px;
+    cursor: pointer;
+}
+
+.modal-post-container {
+    padding-top: 50px;
 }
