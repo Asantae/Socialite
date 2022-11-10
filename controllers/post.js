@@ -71,4 +71,53 @@ exports.getPost = async (req, res) => {
     console.log(err); 
     res.redirect("/home");
   }
+
+}
+
+exports.likePost = async (req, res) => {
+  try {
+    const postId = req.params.id    
+    const likes = await Post.findOne({ _id: postId })
+
+    await Post.findOneAndUpdate({ 
+      _id: postId
+    }, {
+      likes: likes.likes + 1
+    });
+    res.json({ status: 'ok'})
+  } catch (err){
+    res.json({ error: err, status: 'error'})
+    console.log(err);
+  }
+}
+
+exports.removeLike = async (req, res) => {
+  try {
+    const postId = req.params.id    
+    const likes = await Post.findOne({ _id: postId })
+    if(likes.likes > 0){
+      await Post.findOneAndUpdate({ 
+      _id: postId
+    }, {
+        likes: likes.likes - 1
+    });
+      res.json({ status: 'ok'})
+    }
+  } catch (err){
+    res.json({ error: err, status: 'error'})
+    console.log(err);
+  }
+
+}
+
+
+exports.deletePost = async (req, res) => {
+  try {
+    const postId = req.params.id
+    await Post.findOneAndDelete({ _id: postId })
+    res.redirect("/home")
+  } catch (err){
+    console.log(err);
+    res.redirect("/home")
+  }
 }

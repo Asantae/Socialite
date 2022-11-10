@@ -1,6 +1,6 @@
 # Install
 
-`npm install`
+`npm install` or `npm i`
 
 ---
 
@@ -18,7 +18,13 @@
 
 # Run
 
-`npm start`
+`npm run dev`
 
 # Notes about dev environment
 I am using connect-mongo version 3. the most recent version does not support how we are currently implementing new sessions
+
+
+# Screenshots
+![](./img/socialite-screenshot2.jpg)
+![](./img/socialite-screenshot1.jpg)
+![](./img/socialite-screenshot3.jpg)

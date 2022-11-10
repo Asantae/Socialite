@@ -71,6 +71,7 @@ body, main {
     background-color: hsl( var(--clr-dark) );
     line-height: 1.5;
     min-height: 100vh;
+    max-width: 100%;
 }
 
 /* make images easier to work with */
@@ -249,7 +250,7 @@ a:link, a:visited {
     justify-content: space-between;
     align-items: center;
     height: 2.2rem;
-    min-width: 100vw;
+    width: 100%;
     position: fixed;
     background: hsl( var(--clr-light) / 0.2 );
     backdrop-filter: blur(1.5rem);
@@ -328,6 +329,7 @@ ul {
     border-left: solid rgba(255, 255, 255, 0.5) .7px;
     border-right: solid rgba(255, 255, 255, 0.5) .7px;
     border-bottom: solid rgba(255, 255, 255, 0.5) .7px;
+    min-width: 35rem;
     
 }
 
@@ -339,7 +341,7 @@ ul {
 }
 
 .recent-posts {
-    width: 26em;
+    width: 28em;
 }
 
 .index-button-div {
@@ -406,16 +408,15 @@ textarea {
     justify-content: space-around;
 }
 
-.interaction-icons {
+.interaction-icons, .three-dots {
     display: flex;
     flex-direction: row;
     padding-bottom: 10px;
     font-size: .9rem;
-    
-}
-
-.like-button {
-    border-radius: 9999px;
+    background-color: transparent;
+    border: none;
+    justify-content: center;
+    align-items: center;
 }
 
 .interaction-icons > svg {
@@ -425,6 +426,11 @@ textarea {
 }
 
 .like-button:hover {
+    fill: rgb(169, 0, 0);
+    color: rgb(169, 0, 0);
+}
+
+.like-button.active {
     fill: red;
     color: red;
 }
@@ -432,6 +438,10 @@ textarea {
 .comment-button:hover {
     fill: rgb(0, 132, 255);
     color: rgb(0, 132, 255);
+}
+
+button {
+    cursor: pointer;
 }
 
 svg {
@@ -478,7 +488,8 @@ svg {
 .comment-modal {
     background-color: black;
     max-width: 600px;
-    max-height: 400px;
+    min-height: 350px;
+    height: fit-content;
     border-radius: 15px;
     margin-top: 15vh;
     display: flex;
@@ -498,4 +509,16 @@ svg {
 
 .modal-post-container {
     padding-top: 50px;
+    width: 100%;
+    padding-left: 50px;
+    padding-right: 50px;
 }
+
+.home-link {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: -1;
+}
+
