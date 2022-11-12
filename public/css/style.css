@@ -320,7 +320,6 @@ ul {
     display: flex;
     flex-direction: column;
     margin-bottom: 0;
-    width: 26em;
     margin-top: 4rem;
 
 }
@@ -417,6 +416,8 @@ textarea {
     border: none;
     justify-content: center;
     align-items: center;
+    fill: white;
+    color: white;
 }
 
 .interaction-icons > svg {

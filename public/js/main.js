@@ -4,11 +4,22 @@ let commentExitButton = document.querySelector("#modal-exit-button");
 let modalPostContainer = document.querySelector(".modal-post-container");
 let modalForm = document.querySelector(".comment-form");
 let likeButtonArr = document.querySelectorAll(".like-button");
+let time = document.querySelectorAll(".user-time-posted")
 
-commentExitButton.addEventListener('click', () => {
+for(let i = 0; i < time.length; i++){
+    let arr = time[i].childNodes[1].childNodes[3].innerText.split(' ')
+    if(arr.length > 3 ){
+        time[i].childNodes[1].childNodes[3].innerText = arr[2] + ' ' + arr[3] + ' ' + arr[4]
+    }
+}
+
+if(commentExitButton !== null){
+    commentExitButton.addEventListener('click', () => {
     modalBackground.classList.remove('active');
     clearModal();
-})
+    })
+}
+
 
 for(let i = 0; i < commentArr.length; i++){
     commentArr[i].addEventListener('click', (event) => {
