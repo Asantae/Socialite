@@ -345,7 +345,14 @@ ul {
 
 .index-button-div {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+}
+
+.index-form-left-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .form-button {
@@ -357,6 +364,7 @@ ul {
     margin-right: 15px;
     margin-top: 5px;
     font-weight: bold;
+    padding-right: 11px;
 }
 
 .form-items-title {
@@ -405,6 +413,12 @@ textarea {
     width: 100%;
     display: flex;
     justify-content: space-around;
+}
+
+.three-dots {
+
+    padding-top: 10px;
+
 }
 
 .interaction-icons, .three-dots {
@@ -486,6 +500,26 @@ svg {
     opacity: 1;
 }
 
+.delete-modal-background {
+    position: fixed;
+    top: 50%;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.delete-modal-background.active {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.delete-form {
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
 .comment-modal {
     background-color: black;
     max-width: 600px;
@@ -501,7 +535,17 @@ svg {
     
 }
 
-#modal-exit-button {
+.delete-modal {
+    background-color: black;
+    height: fit-content;
+    border-radius: 15px;
+    padding: 50px;
+    position: relative;
+
+    
+}
+
+.modal-exit {
     position: absolute;
     top: 16px;;
     left: 16px;
@@ -522,4 +566,5 @@ svg {
     justify-content: center;
     z-index: -1;
 }
+
 

@@ -118,7 +118,6 @@ exports.getSignup = (req, res) => {
 
 //this will render the profile page depending on the passed in parameters
 exports.getProfile = async (req, res) => {
-  console.log(req.url.split("/")[2])
   try {
     const user = await User.findOne({ _id: req.session.user });
     const users = await User.findOne({ username: req.url.split("/")[2] });
@@ -154,7 +153,7 @@ exports.getProfile = async (req, res) => {
       }
     }
 
-    res.render("profile.ejs", { username: user.username, profileUsername: users.username, posts: post, timePosted: timingArr, comments: comments });
+    res.render("profile.ejs", { username: user.username, profileUsername: users.username, posts: post, timePosted: timingArr, comments: comments, user: user });
   } catch(err) {
     console.log(err)
     res.redirect("/home")

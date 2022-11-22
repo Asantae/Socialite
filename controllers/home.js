@@ -27,19 +27,19 @@ module.exports = {
         let hours = minutes / 60;
         if (seconds < 59) {
           let timeAgo = Math.trunc(seconds) + "s";
-          timingArr.splice(i, 0, timeAgo)
+          timingArr.splice(i, 0, timeAgo);
         } else if (minutes < 59) {
           let timeAgo = Math.trunc(minutes) + "m";
-          timingArr.splice(i, 0, timeAgo)
+          timingArr.splice(i, 0, timeAgo);
         } else if (hours < 24) {
           let timeAgo = Math.trunc(hours) + "h";
-          timingArr.splice(i, 0, timeAgo)
+          timingArr.splice(i, 0, timeAgo);
         } else {
           let timeAgo = post[i].createdAt;
-          timingArr.splice(i, 0, timeAgo)
+          timingArr.splice(i, 0, timeAgo);
         }
       }
-      res.render("index.ejs", { posts: post, username: user.username, timePosted: timingArr, comments: comments });
+      res.render("index.ejs", { posts: post, username: user.username, timePosted: timingArr, comments: comments, user: user });
     } catch (err) {
       console.log(err);
       res.redirect("/login");

@@ -4,7 +4,11 @@ let commentExitButton = document.querySelector("#modal-exit-button");
 let modalPostContainer = document.querySelector(".modal-post-container");
 let modalForm = document.querySelector(".comment-form");
 let likeButtonArr = document.querySelectorAll(".like-button");
-let time = document.querySelectorAll(".user-time-posted")
+let time = document.querySelectorAll(".user-time-posted");
+let deleteButtonArr = document.querySelectorAll(".delete-button");
+let deleteModalForm = document.querySelector(".delete-form");
+let deleteModalBackground = document.querySelector(".delete-modal-background")
+let deleteExitButton = document.querySelector("#delete-exit-button");
 
 for(let i = 0; i < time.length; i++){
     let arr = time[i].childNodes[1].childNodes[3].innerText.split(' ')
@@ -13,13 +17,38 @@ for(let i = 0; i < time.length; i++){
     }
 }
 
-if(commentExitButton !== null){
+if((commentExitButton || deleteExitButton) !== null){
+    deleteExitButton.addEventListener('click', () => {
+        modalBackground.classList.remove('active');
+        deleteModalBackground.classList.remove('active');
+        clearModal();
+    })
     commentExitButton.addEventListener('click', () => {
-    modalBackground.classList.remove('active');
-    clearModal();
+        modalBackground.classList.remove('active');
+        deleteModalBackground.classList.remove('active');
+        clearModal();
     })
 }
 
+for(let i = 0; i < deleteButtonArr.length; i++){
+    deleteButtonArr[i].addEventListener('click', async (event) => {
+        let post = event.currentTarget.parentNode.parentNode.childNodes[3];
+        let postId;
+        if(post.childNodes[3].className === 'fs-300 post-caption') {
+            postId = post.childNodes[5].innerText;
+        } else {
+            postId = post.childNodes[3].innerText;
+        }
+
+        document.querySelector(".yes-delete-button").addEventListener('click', async () => {
+                await fetch(`post/deletePOST/${postId}`, {
+                method: "DELETE",
+            });
+        })
+
+        deleteModalBackground.classList.add('active');
+    })
+}
 
 for(let i = 0; i < commentArr.length; i++){
     commentArr[i].addEventListener('click', (event) => {
