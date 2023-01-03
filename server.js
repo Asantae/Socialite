@@ -7,6 +7,7 @@ const connectDB = require("./config/database");
 const mainRoutes = require("./routes/main");
 const postRoutes = require("./routes/post");
 const commentRoutes = require("./routes/comments");
+const port = process.env.PORT || 9000
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -44,6 +45,6 @@ app.use("/post", postRoutes)
 app.use("/comments", commentRoutes)
 
 //Server Running
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running of port ${process.env.PORT}`);
+app.listen(port, () => {
+  console.log(`listening on port`, port);
 });

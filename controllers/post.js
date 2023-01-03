@@ -134,16 +134,14 @@ exports.removeLike = async (req, res) => {
 
 exports.deletePost = async (req, res) => {
   try {
-    const postId = req.params.id
-    result = await Post.findOne({ _id: postId })
+    const postId = req.params.id;
+    result = await Post.findOne({ _id: postId });
     if(result.cloudinaryId !== '' && result.cloudinaryId !== null){
-      console.log('trying to delete')
+      console.log('trying to delete');
       await cloudinary.uploader.destroy(result.cloudinaryId);
     }
-    await Post.findOneAndDelete({ _id: postId })
-    res.redirect(req.get("referer"));
+    await Post.findOneAndDelete({ _id: postId });
   } catch (err){
     console.log(err);
-    res.redirect(req.get("referer"));
   }
 }

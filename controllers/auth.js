@@ -14,41 +14,36 @@ exports.getLogin = (req, res) => {
 };
 
 exports.postLogin = async (req, res) => {
-    const username = req.body.username
-    const password = req.body.password
-    const user = await User.findOne({ username }).lean()
-//in progress
-  if(!user) {
-      return res.json({ status:'error', error: 'Invalid username/password' })
+  const username = req.body.username
+  const password = req.body.password
+  const user = await User.findOne({ username }).lean()
+
+  if(!user || typeof username !== 'string') {
+    return res.json({status: 'error', error: 'Invalid Username'})
   }
+
   if(user && (await bcrypt.compare(password, user.password))){
-      let lastLoggedInAt = new Date().toLocaleString('en-US') + " " + "(timezone is in EST)"
-      
-      lastLoggedInAt.toString()
-      const token = jwt.sign({
+    let lastLoggedInAt = new Date().toLocaleString('en-US') + " " + "(timezone is in EST)"
+    lastLoggedInAt.toString()
+    const token = jwt.sign({
       id: user._id.toString(),
       username: user.username,
       lastLogged: lastLoggedInAt,
     }, process.env.SESSION_SECRET, {
-      expiresIn: '3h'
+    expiresIn: '3h'
     })
     req.session.user = user._id
     req.session.token = token
-    res.redirect("/home")
+    return res.json({ status: "ok" })
   } else {
-  res.json ({ 
-    status: 'error', 
-    error: 'Invalid username/password',
-    login: false, 
-  })
-  console.log('Invalid username or password')
+    return res.json({ status:'error', error: 'Invalid username/password' })
   } 
 }
 
 exports.postSignup= async (req, res, next) => {
   const username = req.body.username
   const plainTextPassword = req.body.password
-  const reEnteredPass = req.body.reEnteredPassword
+  const reEnteredPass = req.body.reEnteredPass
 
   if(!username || typeof username !== 'string') {
     return res.json({status: 'error', error: 'Invalid Username'})
@@ -86,11 +81,11 @@ exports.postSignup= async (req, res, next) => {
       })
       req.session.user = user._id.toString()
       req.session.token = token
-      res.redirect("/home")
+      return res.json({ status: "ok" })
     }
   } catch(error){
     if(error.code === 11000){
-        return res.json({status: 'error', error: 'This username already exists'})
+      return res.json({status: 'error', error: 'This username already exists'})
     }
     throw error
   }

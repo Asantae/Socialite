@@ -2,29 +2,26 @@
 <%- include('partials/navigation') -%>
 <script src="/js/main.js" defer></script>
 <main class="index-main-content">
-  <div class="form-container">
+
+
+  <section class="recent-posts">
     <form class="post-form" action="post/createPost" enctype="multipart/form-data" method="POST">
       <textarea class="bg-dark post-form-items" name="caption" type="text" placeholder="What would you like to say <%= username %>?"></textarea>
       <small class="error"></small>
       <div class="index-button-div">
         <div class="index-form-left-buttons">
+          <label for="imgUpload" class="form-label">
+            
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-image" viewBox="0 0 16 16">
               <path d="M8.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
               <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v8l-2.083-2.083a.5.5 0 0 0-.76.063L8 11 5.835 9.7a.5.5 0 0 0-.611.076L3 12V2z"/>
             </svg>
-          <label for="imgUpload" class="form-label">
-            Image
           </label>
-
-          <input type="file" class="form-control" id="imageUpload" name="file">
+          <input type="file" class="form-control" id="imgUpload" name="file" style="display: none;">
         </div>
-
         <button class="form-button fs-300" value="send" type="submit">Post</button>
       </div>
     </form>
-  </div>
-
-  <section class="recent-posts">
     <ul>
       <% for(let i = 0; i < posts.length; i++) { %>
         <li class="card">
@@ -42,12 +39,13 @@
             <% } %> 
           </div>
           <div class="post-content">
+            <span class="fs-300 post-caption"><%= posts[i].caption %></span>
             <% if(posts[i].cloudinaryId) { %>
               <div class="post-image-container">
                 <img src="<%= posts[i].image %>">
               </div>
             <% } %> 
-            <span class="fs-300 post-caption"><%= posts[i].caption %></span>
+            
             <hidden><%= posts[i]._id %></hidden>           
           </div>
           

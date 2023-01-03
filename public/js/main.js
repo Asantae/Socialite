@@ -34,16 +34,18 @@ for(let i = 0; i < deleteButtonArr.length; i++){
     deleteButtonArr[i].addEventListener('click', async (event) => {
         let post = event.currentTarget.parentNode.parentNode.childNodes[3];
         let postId;
-        if(post.childNodes[3].className === 'fs-300 post-caption') {
-            postId = post.childNodes[5].innerText;
-        } else {
+        console.log(post.childNodes)
+        if(post.childNodes[3].className === '') {
             postId = post.childNodes[3].innerText;
+        } else {
+            postId = post.childNodes[5].innerText;
         }
 
         document.querySelector(".yes-delete-button").addEventListener('click', async () => {
                 await fetch(`post/deletePOST/${postId}`, {
                 method: "DELETE",
             });
+            
         })
 
         deleteModalBackground.classList.add('active');
@@ -69,8 +71,14 @@ function clearModal(){
 
 for(let i = 0; i < likeButtonArr.length; i++){
     likeButtonArr[i].addEventListener('click', async (event) => {
-        let post = event.currentTarget.parentNode.parentNode.childNodes[3]
-        let postId = post.childNodes[3].innerText
+        let post = event.currentTarget.parentNode.parentNode.childNodes[3];
+        let postId;
+        if(post.childNodes.length === 5){
+            postId = post.childNodes[3].innerText
+        } else {
+            postId = post.childNodes[5].innerText
+        }
+        
         toggleLike(postId, i)
     })
 }
