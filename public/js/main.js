@@ -1,3 +1,5 @@
+let postArea = document.querySelector(".post-form-items")
+let postButton = document.querySelector(".form-button");
 let commentArr = document.querySelectorAll(".comment-button");
 let modalBackground = document.querySelector(".modal-background");
 let commentExitButton = document.querySelector("#modal-exit-button");
@@ -9,6 +11,30 @@ let deleteButtonArr = document.querySelectorAll(".delete-button");
 let deleteModalForm = document.querySelector(".delete-form");
 let deleteModalBackground = document.querySelector(".delete-modal-background")
 let deleteExitButton = document.querySelector("#delete-exit-button");
+let file = document.querySelector('#imgUpload');
+
+file.addEventListener('change', (e) => {
+  // Get the selected file
+  const [file] = e.target.files;
+  console.log(e.target.files)
+  // Get the file name and size
+  const { name: fileName, size } = file;
+  // Convert size in bytes to kilo bytes
+  const fileSize = (size / 1000).toFixed(2);
+  // Set the text content
+  const fileNameAndSize = `${fileName} - ${fileSize}KB`;
+  document.querySelector('.file-name').textContent = fileNameAndSize;
+});
+
+postArea.addEventListener("input", () => {
+    if(postArea.value == ""){
+        postButton.disabled = true;
+        postButton.classList.add("unclick");
+    } else {
+        postButton.disabled = false;
+        postButton.classList.remove("unclick");
+    }
+})
 
 for(let i = 0; i < time.length; i++){
     let arr = time[i].childNodes[1].childNodes[3].innerText.split(' ')
@@ -34,7 +60,6 @@ for(let i = 0; i < deleteButtonArr.length; i++){
     deleteButtonArr[i].addEventListener('click', async (event) => {
         let post = event.currentTarget.parentNode.parentNode.childNodes[3];
         let postId;
-        console.log(post.childNodes)
         if(post.childNodes[3].className === '') {
             postId = post.childNodes[3].innerText;
         } else {
@@ -44,7 +69,7 @@ for(let i = 0; i < deleteButtonArr.length; i++){
         document.querySelector(".yes-delete-button").addEventListener('click', async () => {
                 await fetch(`post/deletePOST/${postId}`, {
                 method: "DELETE",
-            });
+            }).then((res) => res.json())
             
         })
 

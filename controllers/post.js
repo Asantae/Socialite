@@ -8,30 +8,27 @@ exports.createPost = async (req, res) => {
   const id = req.session.user
   const user = await User.findById(req.session.user).lean();
   try {
-      // Upload image to cloudinary
-      if(req.file){
-        const result = await cloudinary.uploader.upload(req.file.path);
-        await Post.create({
-          caption: caption,
-          id: id,
-          username: user.username,
-          image: result.secure_url,
-          cloudinaryId: result.public_id,
-        })
-      } else {
-        await Post.create({
-          caption: caption,
-          id: id,
-          username: user.username,
-        });
-      }
-      
-      
+    // Upload image to cloudinary
+    if(req.file && caption){
+      const result = await cloudinary.uploader.upload(req.file.path);
+      await Post.create({
+        caption: caption,
+        id: id,
+        username: user.username,
+        image: result.secure_url,
+        cloudinaryId: result.public_id,
+      })
+    } else {
+      await Post.create({
+        caption: caption,
+        id: id,
+        username: user.username,
+      });
+    }
 
-      res.redirect("/home");
+    res.redirect("/home");
   } catch(error){
-      console.log(error)
-      return res.json({ status: 'error', error: error });
+    return res.json({ status: 'error', error: error });
   }
 }
 
