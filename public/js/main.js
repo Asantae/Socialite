@@ -16,7 +16,6 @@ let file = document.querySelector('#imgUpload');
 file.addEventListener('change', (e) => {
   // Get the selected file
   const [file] = e.target.files;
-  console.log(e.target.files)
   // Get the file name and size
   const { name: fileName, size } = file;
   // Convert size in bytes to kilo bytes
@@ -81,17 +80,23 @@ for(let i = 0; i < commentArr.length; i++){
     commentArr[i].addEventListener('click', (event) => {
         let user = event.currentTarget.parentNode.parentNode.childNodes[1];
         let post = event.currentTarget.parentNode.parentNode.childNodes[3];
-        let postId = post.childNodes[3].innerText;
+        let postId
+        if(post.childNodes[3].innerText === ''){
+            postId = post.childNodes[5].innerText
+        } else {
+            postId = post.childNodes[3].innerText; 
+        }
+
         modalPostContainer.appendChild(user.cloneNode(true));
         modalPostContainer.appendChild(post.cloneNode(true));
-        modalForm.action = `/comments/comment/${postId}`
+        modalForm.action = `/comments/comment/${postId}`;
         modalBackground.classList.add('active');
     })
 }
 
 function clearModal(){
-    modalPostContainer.removeChild(modalPostContainer.childNodes[0])
-    modalPostContainer.removeChild(modalPostContainer.childNodes[0])
+    modalPostContainer.removeChild(modalPostContainer.childNodes[0]);
+    modalPostContainer.removeChild(modalPostContainer.childNodes[0]);
 }
 
 for(let i = 0; i < likeButtonArr.length; i++){
@@ -103,8 +108,8 @@ for(let i = 0; i < likeButtonArr.length; i++){
         } else {
             postId = post.childNodes[5].innerText
         }
-        
-        toggleLike(postId, i)
+
+        toggleLike(postId, i);
     })
 }
 
